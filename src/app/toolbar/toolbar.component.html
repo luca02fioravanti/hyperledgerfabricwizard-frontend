@@ -1,0 +1,21 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="toolbar-title" routerLink="">{{this.title}}</span>
+    <div fxFlex></div>
+    <button mat-button [routerLink]="m.link" *ngFor="let m of menus">{{m.name}}</button>
+    <ng-template [ngIf]="dropdown">
+      <button mat-icon-button [matMenuTriggerFor]="drop">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #drop>
+        <button *ngFor="let menu of dropdown.menus" [routerLink]="menu.link" mat-menu-item>
+          <span>{{menu.name}}</span>
+        </button>
+      </mat-menu>
+    </ng-template>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<div>
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,14 @@
+<form [formGroup]="this.form">
+  <mat-vertical-stepper linear>
+    <mat-step [stepControl]="organizationComponent.form" *ngFor="let org of orgs; let i = index">
+      <ng-template matStepLabel>{{org.fullName}}</ng-template>
+      <app-organization
+        [i]="i"
+        [last]="this.orgs.length-1 === i"
+        [rootStepper]="this.rootStepper"
+        [parentForm]="this.form" #organizationComponent
+        [isLocalhost]="this.isLocalhost"
+        [org]="org"></app-organization>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>

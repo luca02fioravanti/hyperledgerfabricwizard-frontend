@@ -1,0 +1,136 @@
+<app-loading [loading]="loading"></app-loading>
+<app-toolbar>
+  <div *ngIf="config" fxLayout="row" style="margin-top: 50px">
+    <div fxFlexOrder="2" fxFlex.lt-sm="100" fxFlex="70" fxFlex.lg="60">
+      <mat-card>
+        <div fxLayout="row wrap" fxLayoutGap="2% grid">
+          <div fxFlex>
+            <button style="width: 100%" color="primary" mat-stroked-button>Share
+              <mat-icon>share</mat-icon>
+            </button>
+          </div>
+          <div fxFlex>
+            <button style="width: 100%" color="warn" mat-stroked-button>Delete
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div fxLayout="column" fxLayoutGap="4%">
+          <div fxFlex>
+            <mat-list>
+              <div mat-subheader>Name</div>
+              <mat-list-item>
+                <h2>{{this.config.network.name}}</h2>
+              </mat-list-item>
+              <mat-divider inset="true"></mat-divider>
+              <div mat-subheader>Author</div>
+              <mat-list-item>{{this.config.author.email}}</mat-list-item>
+              <mat-divider inset="true"></mat-divider>
+              <div mat-subheader>Date</div>
+              <mat-list-item>{{this.config.timestamp}}</mat-list-item>
+            </mat-list>
+          </div>
+          <mat-tab-group fxFlex animationDuration="0ms">
+            <mat-tab fxFlex label="Organizations">
+              <div fxLayout="column" fxLayoutGap="4%">
+                <div></div>
+                <div fxLayout="column">
+                  <mat-accordion class="custom-align">
+                    <ng-template ngFor let-i="index" let-org [ngForOf]="this.config.network.orgs">
+                      <mat-expansion-panel (click)="setEntitityTable(i)" class="mat-elevation-z0 paper">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ org.fullName }}
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div fxLayout="column" fxLayoutGap="4%">
+                          <div class="paper">
+                            <table fxFlex mat-table [dataSource]="entitiesTable">
+                              <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef>Entity</th>
+                                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                              </ng-container>
+                              <ng-container matColumnDef="type">
+                                <th mat-header-cell style="text-align: center" *matHeaderCellDef>Type</th>
+                                <td mat-cell style="text-align: center" *matCellDef="let element">
+                                  {{element.type}}
+                                </td>
+                              </ng-container>
+                              <ng-container matColumnDef="url">
+                                <th mat-header-cell style="text-align: center" *matHeaderCellDef>Url</th>
+                                <td mat-cell style="text-align: center" *matCellDef="let element">
+                                  {{element.url}}
+                                </td>
+                              </ng-container>
+                              <ng-container matColumnDef="port">
+                                <th mat-header-cell style="text-align: center" *matHeaderCellDef>Port</th>
+                                <td mat-cell style="text-align: center" *matCellDef="let element">
+                                  {{element.port}}
+                                </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="entitiesTableHeadings"></tr>
+                              <tr mat-row *matRowDef="let row; columns: entitiesTableHeadings;"></tr>
+                            </table>
+                          </div>
+                          <div fxFlex>
+                            <button (click)="download(i)" color="primary" mat-flat-button style="width: 100%">
+                              {{org.fullName}}.zip
+                              <mat-icon>get_app</mat-icon>
+                            </button>
+                          </div>
+                        </div>
+                      </mat-expansion-panel>
+                    </ng-template>
+                  </mat-accordion>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab fxFlex label="Consortium">
+              <div fxLayout="column" fxLayoutGap="4%">
+                <div></div>
+                <div class="paper" fxLayout="column" fxLayoutGap="4%"
+                     *ngFor="let consortium of this.config.network.consortiums">
+                  <div style="padding: 16px 16px" fxLayout="row wrap" fxLayoutGap="2% grid">
+                    <div class="bold" fxFlex="50">Name</div>
+                    <div fxFlex="50">{{consortium.name}}</div>
+                    <mat-divider style="position: inherit!important;" fxFlex="100"></mat-divider>
+                    <div class="bold" fxFlex="50">Organizations</div>
+                    <div fxFlex="50">
+                      <ul class="html-list">
+                        <li *ngFor="let org of this.consortium.orgs">{{org}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab fxFlex label="Channels">
+              <div fxLayout="column" fxLayoutGap="4%">
+                <div></div>
+                <div class="paper" fxLayout="column" fxLayoutGap="4%"
+                     *ngFor="let channel of this.config.network.channels">
+                  <div style="padding: 16px 16px" fxLayout="row wrap" fxLayoutGap="2% grid">
+                    <div class="bold" fxFlex="50">Name</div>
+                    <div fxFlex="50">{{channel.name}}</div>
+                    <mat-divider style="position: inherit!important;" fxFlex="100"></mat-divider>
+                    <div class="bold" fxFlex="50">Consortium</div>
+                    <div fxFlex="50">{{channel.consortium}}</div>
+                    <mat-divider style="position: inherit!important;" fxFlex="100"></mat-divider>
+                    <div class="bold" fxFlex="50">Organizations</div>
+                    <div fxFlex="50">
+                      <ul class="html-list">
+                        <li *ngFor="let org of this.channel.orgs">{{org}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </mat-card>
+    </div>
+    <div fxFlex fxFlexOrder="3"></div>
+    <div fxFlex fxFlexOrder="1"></div>
+  </div>
+</app-toolbar>

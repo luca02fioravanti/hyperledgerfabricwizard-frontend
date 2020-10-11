@@ -1,0 +1,14 @@
+.condensed {
+  min-height: auto !important;
+  height: 48px !important;
+
+  span.toolbar-title {
+    font-size: 17px !important;
+  }
+}
+
+.toolbar-title {
+  font-size: 18px;
+  cursor: pointer;
+  outline: transparent
+}

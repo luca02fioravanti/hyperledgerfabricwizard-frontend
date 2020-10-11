@@ -1,0 +1,21 @@
+<form [formGroup]="form">
+  <h2>Certificate Authority</h2>
+  <div fxLayout="row wrap" fxLayoutGap="2% grid">
+    <mat-form-field *ngIf="!this.isLocalhost" fxFlex>
+      <mat-label>Url</mat-label>
+      <input required placeholder="localhost" matInput formControlName="url">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <mat-label>Port</mat-label>
+      <input required placeholder="7050" matInput type="number" min="0" formControlName="port">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <mat-label>State</mat-label>
+      <mat-select formControlName="state">
+        <ng-template ngFor let-state [ngForOf]="states">
+          <mat-option [value]="state.code">{{state.name}}</mat-option>
+        </ng-template>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>

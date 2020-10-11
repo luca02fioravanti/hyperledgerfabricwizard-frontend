@@ -1,0 +1,69 @@
+<app-loading [loading]="loading"></app-loading>
+<app-toolbar>
+  <div *ngIf="!loading" fxFlex fxLayout="row" style="margin-top: 100px">
+    <div fxFlexOrder="2" fxFlex.lt-sm="100" fxFlex="70" fxFlex.lg="60">
+      <mat-card *ngIf="list">
+        <div fxLayout="column" fxLayoutGap="2%">
+          <div fxLayout.lt-md="column" fxLayout="row">
+            <h2>Configurations</h2>
+          </div>
+          <div fxLayout="column">
+            <mat-accordion class="custom-align">
+              <ng-template ngFor let-i="index" let-config [ngForOf]="list">
+                <mat-expansion-panel (click)="setCurrent(i)" class="mat-elevation-z0 paper">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{ config.name }}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      {{config.timestamp}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <div fxLayout="column" fxLayoutGap="2%">
+                    <table fxFlex [dataSource]="data1" mat-table class="paper">
+                      <ng-container matColumnDef="org">
+                        <th mat-header-cell *matHeaderCellDef>Organizations</th>
+                        <td mat-cell *matCellDef="let element">{{element.org}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="orderer">
+                        <th mat-header-cell style="text-align: center" *matHeaderCellDef>Orderer</th>
+                        <td mat-cell style="text-align: center" *matCellDef="let element">{{element.orderer}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="peer">
+                        <th mat-header-cell style="text-align: center" *matHeaderCellDef>Peer</th>
+                        <td mat-cell style="text-align: center" *matCellDef="let element">{{element.peer}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="admin">
+                        <th mat-header-cell style="text-align: center" *matHeaderCellDef>Admin</th>
+                        <td mat-cell style="text-align: center" *matCellDef="let element">{{element.admin}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="client">
+                        <th mat-header-cell style="text-align: center" *matHeaderCellDef>Client</th>
+                        <td mat-cell style="text-align: center" *matCellDef="let element">{{element.client}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="table1"></tr>
+                      <tr mat-row *matRowDef="let row; columns: table1;"></tr>
+                    </table>
+                    <div fxFlex>
+                      <button class="primary-stroke" mat-stroked-button color="primary" fxFlex
+                              [routerLink]="this.configDetails(config.id)">
+                        Show more
+                      </button>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </ng-template>
+            </mat-accordion>
+          </div>
+          <div></div>
+          <button style="height: auto" (click)="newConfiguration()" fxFlex color="primary" mat-flat-button>New
+            configuration
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+    <div fxFlex fxFlexOrder="1"></div>
+    <div fxFlex fxFlexOrder="3"></div>
+  </div>
+</app-toolbar>

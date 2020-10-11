@@ -1,0 +1,67 @@
+@mixin app($theme) {
+  $background: map-get($theme, background);
+  $card: map-get($background, card);
+  mat-horizontal-stepper {
+    background: mat-color($background, background) !important;
+  }
+  mat-vertical-stepper {
+    background: mat-color($background, background) !important;
+  }
+  mat-toolbar {
+    @if (map_get($theme, is-dark)) {
+      background: transparent !important;
+    } @else {
+
+    }
+  }
+  mat-card {
+    border-style: solid;
+    box-shadow: none !important;
+    @if (map_get($theme, is-dark)) {
+      border-color: #5f6368;
+      border-width: 0;
+    } @else {
+      border-color: #dadce0;
+      border-width: 0.5px;
+    }
+  }
+  .mat-step-icon.mat-step-icon-state-number:not(.mat-step-icon-selected) {
+    @if (map_get($theme, is-dark)) {
+      background: $card;
+    } @else {
+    }
+  }
+  .paper {
+    border-radius: 4px;
+    border-style: solid;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-width: 0.5px;
+    @if (map_get($theme, is-dark)) {
+      border-color: #5f6368;
+    } @else {
+      border-color: #dadce0;
+    }
+  }
+
+  .primary-stroke {
+    border-color: mat-color(map-get($theme, primary), 400) !important;
+  }
+}
+
+strong {
+  font-weight: 500 !important;
+}
+
+.checkbox {
+  min-height: 60px;
+  align-self: center;
+}
+
+.light-theme .mat-form-field-appearance-outline:not(.mat-focused):not(:hover) .mat-form-field-outline {
+  color: rgba(0, 0, 0, 0.23);
+}
+
+.mat-slide-toggle-label {
+  justify-content: center;
+}

@@ -1,1 +1,72 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import "app/app.component";
+@import "app/wizard/network/network.component";
+@import "app/stepper/stepper.component";
+@import "app/wizard/summary/summary.component";
+@import "app/toolbar/toolbar.component";
+@import "app/home/home.component";
+@import "app/network-config/details/details.component";
+@import "app/loading/loading.component";
+
+@include mat-core();
+
+@mixin custom-theme($theme) {
+  @include app($theme);
+  @include mystep($theme);
+  @include loading($theme);
+}
+
+
+// Light theme
+$light-primary: mat-palette($mat-indigo);
+$light-accent: mat-palette($mat-indigo);
+$light-theme: mat-light-theme($light-primary, $light-accent);
+
+.light-theme {
+  @include angular-material-theme($light-theme);
+  @include custom-theme($light-theme);
+}
+
+
+// Dark theme
+$dark-primary: mat-palette($mat-blue-gray);
+$dark-accent: mat-palette($mat-blue-gray, A200, A100, A400);
+//$dark-warn: mat-palette($mat-deep-orange);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent); //$dark-warn);
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include custom-theme($dark-theme);
+}
+
+body.light-theme {
+  //background: white !important;
+  $background: map-get($light-theme, background);
+  background: mat-color($background, background) !important;
+}
+
+.light-theme .mat-tab-nav-bar, .light-theme .mat-tab-header {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.dark-theme .mat-tab-nav-bar, .dark-theme .mat-tab-header {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.dark-theme {
+  $background: map-get($dark-theme, background);
+  background: mat-color($background, background) !important;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-form-field {
+  width: 100%;
+}

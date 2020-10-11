@@ -1,0 +1,7 @@
+@mixin loading($theme) {
+
+  mat-spinner svg circle {
+    stroke-width: 4% !important;
+  }
+
+}
