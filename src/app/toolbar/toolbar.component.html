@@ -8,6 +8,11 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #drop>
+        <div style="padding: 8px 8px">
+          <h5>Logged as:</h5>
+          <h4>{{dropdown.name}}</h4>
+          <mat-divider></mat-divider>
+        </div>
         <button *ngFor="let menu of dropdown.menus" [routerLink]="menu.link" mat-menu-item>
           <span>{{menu.name}}</span>
         </button>
