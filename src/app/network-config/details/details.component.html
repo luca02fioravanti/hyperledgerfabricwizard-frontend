@@ -5,12 +5,12 @@
       <mat-card>
         <div fxLayout="row wrap" fxLayoutGap="2% grid">
           <div fxFlex>
-            <button style="width: 100%" color="primary" mat-stroked-button>Share
+            <button routerLink="share" style="width: 100%" color="primary" mat-stroked-button>Share
               <mat-icon>share</mat-icon>
             </button>
           </div>
           <div fxFlex>
-            <button style="width: 100%" color="warn" mat-stroked-button>Delete
+            <button (click)="deleteConfig()" style="width: 100%" color="warn" mat-stroked-button>Delete
               <mat-icon>delete</mat-icon>
             </button>
           </div>

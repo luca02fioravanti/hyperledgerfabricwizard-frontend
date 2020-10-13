@@ -6,9 +6,13 @@ import {map, mergeMap, tap} from 'rxjs/operators';
 import * as FileSaver from 'file-saver';
 import {Loading} from '../../_services/loading';
 import {Client, Entity, Orderer, Peer} from '../../_models/fabric/entity';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
+import {Location} from '@angular/common';
 
 type EntityTable = { name: string, type: string, url: string, port: string };
+declare let window: any;
 
 @Component({
   selector: 'app-details',
@@ -23,7 +27,12 @@ export class DetailsComponent implements OnInit, Loading {
   entitiesTableHeadings = ['name', 'type', 'url', 'port'];
   cachedTables: Map<number, EntityTable[]> = new Map<number, EntityTable[]>();
 
-  constructor(private server: Server, private route: ActivatedRoute, private router: Router, private snackbar: MatSnackBar) {
+  constructor(private dialog: MatDialog,
+              private server: Server,
+              private route: ActivatedRoute,
+              private router: Router,
+              private location: Location,
+              private snackbar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -61,6 +70,17 @@ export class DetailsComponent implements OnInit, Loading {
       this.snackbar.open('Error', null, {
         duration: 2000
       });
+    });
+  }
+
+  deleteConfig(): void {
+    this.dialog.open(DeleteDialogComponent, {
+      width: '600px',
+      data: this.config
+    }).afterClosed().subscribe(result => {
+      if (result.result) {
+        window.location.reload();
+      }
     });
   }
 

@@ -54,6 +54,9 @@
                 </mat-expansion-panel>
               </ng-template>
             </mat-accordion>
+            <div *ngIf="list.length == 0">
+              There are no configurations.
+            </div>
           </div>
           <div></div>
           <button style="height: auto" (click)="newConfiguration()" fxFlex color="primary" mat-flat-button>New

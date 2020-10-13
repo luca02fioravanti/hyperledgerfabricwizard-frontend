@@ -55,7 +55,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {LoadingComponent} from './loading/loading.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { ShareComponent } from './network-config/details/share/share.component';
+import {ShareComponent} from './network-config/details/share/share.component';
+import {SharingDialogComponent} from './network-config/details/share/sharing-dialog/sharing-dialog.component';
+import { SharedWithMeComponent } from './network-config/details/share/shared-with-me/shared-with-me.component';
+import { DeleteDialogComponent } from './network-config/details/delete-dialog/delete-dialog.component';
 
 
 const appearance: MatFormFieldDefaultOptions = {
@@ -83,7 +86,10 @@ const appearance: MatFormFieldDefaultOptions = {
     LogoutComponent,
     DetailsComponent,
     LoadingComponent,
-    ShareComponent
+    ShareComponent,
+    SharingDialogComponent,
+    SharedWithMeComponent,
+    DeleteDialogComponent
   ],
   imports: [BrowserModule,
     BrowserAnimationsModule,

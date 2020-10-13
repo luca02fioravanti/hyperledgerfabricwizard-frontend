@@ -1,0 +1,22 @@
+<div fxLayout="row">
+  <h1 fxFlex mat-dialog-title>Share</h1>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div>
+  <h2>{{data.networkZip.zipName}}</h2>
+</div>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div fxLayout="column" fxLayoutGap="2%">
+      <mat-form-field fxFlex>
+        <mat-label>Enter an email</mat-label>
+        <input cdkFocusInitial required formControlName="email" type="email" matInput>
+      </mat-form-field>
+      <div fxFlex>
+        <button type="submit" style="width: 100%" mat-flat-button color="primary">Invite</button>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>

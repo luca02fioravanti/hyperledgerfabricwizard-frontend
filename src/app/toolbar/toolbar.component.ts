@@ -20,7 +20,12 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLogged()) {
-      this.dropdown = {name: this.authService.getEmail(), menus: [{name: 'Logout', link: '/logout'}]};
+      this.dropdown = {
+        name: this.authService.getEmail(), menus: [
+          {name: 'Shared with me', link: '/shared'},
+          {name: 'Logout', link: '/logout'}
+        ]
+      };
     }
     switch (this.router.url) {
       case '/login':

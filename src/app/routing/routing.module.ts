@@ -8,6 +8,8 @@ import {WizardComponent} from '../wizard/wizard.component';
 import {IsAuthenticatedGuard} from '../is-authenticated.guard';
 import {LogoutComponent} from '../logout/logout.component';
 import {DetailsComponent} from '../network-config/details/details.component';
+import {ShareComponent} from '../network-config/details/share/share.component';
+import {SharedWithMeComponent} from '../network-config/details/share/shared-with-me/shared-with-me.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [IsAuthenticatedGuard]},
@@ -16,7 +18,13 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent, canActivate: [IsAuthenticatedGuard]},
   {path: 'wizard', component: WizardComponent, canActivate: [IsAuthenticatedGuard]},
   {path: 'logout', component: LogoutComponent, canActivate: [IsAuthenticatedGuard]},
-  {path: 'config/:id', component: DetailsComponent, canActivate: [IsAuthenticatedGuard]}
+  {path: 'shared', component: SharedWithMeComponent, canActivate: [IsAuthenticatedGuard]},
+  {
+    path: 'config/:id', canActivate: [IsAuthenticatedGuard], children: [
+      {path: '', component: DetailsComponent},
+      {path: 'share', component: ShareComponent}
+    ]
+  },
 ];
 
 @NgModule({
