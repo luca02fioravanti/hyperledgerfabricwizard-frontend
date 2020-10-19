@@ -15,7 +15,8 @@
         <div fxLayout="column" fxLayoutGap="4%">
           <div *ngFor="let shared of sharedList; let i = index" fxFlex>
             <mat-list class="paper">
-              <div mat-subheader>Organization</div>
+              <div mat-subheader *ngIf="!shared.networkZip.networkConfig.network.isLocalhost">Organization</div>
+              <div mat-subheader *ngIf="shared.networkZip.networkConfig.network.isLocalhost">Network</div>
               <mat-list-item>
                 <h3>{{this.shared.networkZip.zipName}}</h3>
               </mat-list-item>

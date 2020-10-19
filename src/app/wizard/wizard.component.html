@@ -1,3 +1,4 @@
+<app-loading [loading]="loading"></app-loading>
 <app-toolbar>
   <app-stepper [@.disabled]="true" linear #stepper>
     <cdk-step label="Network" [stepControl]="networkComponent.form">
@@ -17,7 +18,7 @@
       <app-channels #channelsComponent [network]="this.network"></app-channels>
     </cdk-step>
     <cdk-step label="Summary">
-      <app-summary *ngIf="stepper.selectedIndex==4" [network]="this.network"></app-summary>
+      <app-summary (loading)="loading=$event" *ngIf="stepper.selectedIndex==4" [network]="this.network"></app-summary>
     </cdk-step>
   </app-stepper>
 </app-toolbar>

@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Network} from '../../_models/fabric/network';
 import {Client, Orderer, Peer} from '../../_models/fabric/entity';
 import {Server} from '../../_services/server';
 import {Router} from '@angular/router';
+import {Loading} from '../../_services/loading';
 
 export type Table1 = {
   org: string,
@@ -30,6 +31,7 @@ type Table3 = {
 export class SummaryComponent implements OnInit {
 
   @Input() network: Network;
+  @Output() loading = new EventEmitter<boolean>();
 
   table1: string[] = ['org', 'orderer', 'peer', 'admin', 'client'];
   table2: string[] = ['consortium', 'orgs'];
@@ -82,11 +84,13 @@ export class SummaryComponent implements OnInit {
 
   saveConfiguration(): void {
     this.disabled = true;
+    this.loading.emit(true);
     this.server.addNetworkConfig(this.network).subscribe(e => {
       if (e.ok) {
         this.router.navigateByUrl('/');
       } else {
         this.disabled = false;
+        this.loading.emit(false);
       }
     });
   }

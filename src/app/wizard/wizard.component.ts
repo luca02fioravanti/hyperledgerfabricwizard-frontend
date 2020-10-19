@@ -5,14 +5,16 @@ import {Client} from '../_models/fabric/entity';
 import {Ca} from '../_models/fabric/ca';
 import {Consortium} from '../_models/fabric/consortium';
 import {Channel} from '../_models/fabric/channel';
+import {Loading} from '../_services/loading';
 
 @Component({
   selector: 'app-wizard',
   templateUrl: './wizard.component.html',
   styleUrls: ['./wizard.component.scss']
 })
-export class WizardComponent implements OnInit {
+export class WizardComponent implements OnInit, Loading {
   network: Network;
+  loading = false;
 
   constructor() {
     this.network = new Network();

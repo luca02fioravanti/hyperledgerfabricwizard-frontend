@@ -53,7 +53,7 @@
         </table>
       </div>
       <div fxFlex fxLayout="column">
-        <button fxFlex (click)="saveConfiguration()" color="accent" mat-flat-button>Save configuration</button>
+        <button [disabled]="disabled" fxFlex (click)="saveConfiguration()" color="accent" mat-flat-button>Save configuration</button>
       </div>
     </div>
   </mat-card>

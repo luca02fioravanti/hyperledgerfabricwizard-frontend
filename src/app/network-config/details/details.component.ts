@@ -10,6 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
 import {Location} from '@angular/common';
+import {Org} from '../../_models/fabric/org';
 
 type EntityTable = { name: string, type: string, url: string, port: string };
 declare let window: any;
@@ -59,10 +60,18 @@ export class DetailsComponent implements OnInit, Loading {
     this.entitiesTable = table;
   }
 
-  download(i: number): void {
-    this.loading = true;
-    const org = this.config.network.orgs[i];
-    this.server.getZip(this.config.id, org.fullName).subscribe(s => {
+  download(i?: number): void {
+    if (i) {
+      this.loading = true;
+      const org = this.config.network.orgs[i];
+      this.extracted(org.fullName);
+    } else {
+      this.extracted(this.config.network.name);
+    }
+  }
+
+  private extracted(name: string): void {
+    this.server.getZip(this.config.id, name).subscribe(s => {
       this.loading = false;
       FileSaver.saveAs(s.body, s.headers.get('Content-Disposition').split('filename=')[1]);
     }, e => {

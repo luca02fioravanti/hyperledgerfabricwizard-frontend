@@ -4,9 +4,14 @@
     <div fxFlexOrder="2" fxFlex.lt-sm="100" fxFlex="70" fxFlex.lg="60">
       <mat-card>
         <div fxLayout="row wrap" fxLayoutGap="2% grid">
-          <div fxFlex>
+          <div *ngIf="!config.network.isLocalhost" fxFlex>
             <button routerLink="share" style="width: 100%" color="primary" mat-stroked-button>Share
               <mat-icon>share</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="config.network.isLocalhost" fxFlex>
+            <button (click)="download()" style="width: 100%" color="primary" mat-stroked-button>Download
+              <mat-icon>get_app</mat-icon>
             </button>
           </div>
           <div fxFlex>
@@ -28,12 +33,17 @@
               <mat-divider inset="true"></mat-divider>
               <div mat-subheader>Date</div>
               <mat-list-item>{{this.config.timestamp}}</mat-list-item>
+              <mat-divider inset="true"></mat-divider>
+              <div mat-subheader>Typology</div>
+              <mat-list-item *ngIf="config.network.isLocalhost">Local</mat-list-item>
+              <mat-list-item *ngIf="!config.network.isLocalhost">Distributed</mat-list-item>
             </mat-list>
           </div>
           <mat-tab-group fxFlex animationDuration="0ms">
             <mat-tab fxFlex label="Organizations">
               <div fxLayout="column" fxLayoutGap="4%">
-                <div></div>
+                <div>
+                </div>
                 <div fxLayout="column">
                   <mat-accordion class="custom-align">
                     <ng-template ngFor let-i="index" let-org [ngForOf]="this.config.network.orgs">
@@ -72,7 +82,7 @@
                               <tr mat-row *matRowDef="let row; columns: entitiesTableHeadings;"></tr>
                             </table>
                           </div>
-                          <div fxFlex>
+                          <div *ngIf="!config.network.isLocalhost" fxFlex>
                             <button (click)="download(i)" color="primary" mat-flat-button style="width: 100%">
                               {{org.fullName}}.zip
                               <mat-icon>get_app</mat-icon>

@@ -1,10 +1,6 @@
 <form [formGroup]="form">
   <h2>Certificate Authority</h2>
   <div fxLayout="row wrap" fxLayoutGap="2% grid">
-    <mat-form-field *ngIf="!this.isLocalhost" fxFlex>
-      <mat-label>Url</mat-label>
-      <input required placeholder="localhost" matInput formControlName="url">
-    </mat-form-field>
     <mat-form-field fxFlex>
       <mat-label>Port</mat-label>
       <input required placeholder="7050" matInput type="number" min="0" formControlName="port">
