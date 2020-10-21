@@ -35,8 +35,10 @@
               <mat-list-item>{{this.config.timestamp}}</mat-list-item>
               <mat-divider inset="true"></mat-divider>
               <div mat-subheader>Typology</div>
-              <mat-list-item *ngIf="config.network.isLocalhost">Local</mat-list-item>
-              <mat-list-item *ngIf="!config.network.isLocalhost">Distributed</mat-list-item>
+              <mat-list-item *ngIf="config.network.isLocalhost; else distributed">Local</mat-list-item>
+              <ng-template #distributed>
+                <mat-list-item>Distributed</mat-list-item>
+              </ng-template>
             </mat-list>
           </div>
           <mat-tab-group fxFlex animationDuration="0ms">

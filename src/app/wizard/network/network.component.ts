@@ -101,7 +101,7 @@ export class NetworkComponent implements OnInit {
     if (this.network.name) {
       this.networkName.setValue(this.network.name);
     }
-    if (this.network.isLocalhost) {
+    if (this.network.isLocalhost !== undefined) {
       this.networkMode.setValue(this.network.isLocalhost ? '0' : '1');
     }
     if (!this.network.orgs) {

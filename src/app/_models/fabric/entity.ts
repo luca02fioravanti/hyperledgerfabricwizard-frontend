@@ -21,7 +21,7 @@ export abstract class Entity {
     // @ts-ignore
     let entity = new Entity();
     entity.org = org;
-    if (obj.name) {
+    if (obj.name !== undefined) {
       entity.name = obj.name;
     }
     if (obj.state && obj.state.code && obj.state.name) {
@@ -34,21 +34,22 @@ export abstract class Entity {
         entity = entity.toEntityInstance(Type.Client);
       }
     } else {
-      if (obj.isAnchor) {
+      if (obj.isAnchor !== undefined) {
         entity = entity.toEntityInstance(Type.Peer);
         entity.isAnchor = obj.isAnchor;
-        if (obj.url) {
+        if (obj.url !== undefined) {
           entity.url = obj.url;
         }
-        if (obj.port) {
+        if (obj.port !== undefined) {
           entity.port = obj.port;
         }
+        entity.couchDB = obj.couchDB;
       } else {
-        if (obj.url) {
+        if (obj.url !== undefined) {
           entity = entity.toEntityInstance(Type.Orderer);
           entity.url = obj.url;
         }
-        if (obj.port) {
+        if (obj.port !== undefined) {
           entity = entity.toEntityInstance(Type.Orderer);
           entity.port = obj.port;
         }

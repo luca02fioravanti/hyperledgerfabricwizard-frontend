@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Network} from '../_models/fabric/network';
-import {Org} from '../_models/fabric/org';
-import {Client} from '../_models/fabric/entity';
-import {Ca} from '../_models/fabric/ca';
-import {Consortium} from '../_models/fabric/consortium';
-import {Channel} from '../_models/fabric/channel';
 import {Loading} from '../_services/loading';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import * as FileSaver from 'file-saver';
+import {ImportDialogComponent} from './import-dialog/import-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {Menu} from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-wizard',
@@ -15,37 +15,78 @@ import {Loading} from '../_services/loading';
 export class WizardComponent implements OnInit, Loading {
   network: Network;
   loading = false;
+  @ViewChild('importFile', {static: true}) input: ElementRef;
+  file: File;
+  menus: Menu[] = [];
 
-  constructor() {
-    this.network = new Network();
-    /*this.network.name = 'test-network';
-    this.network.isLocalhost = true;
-    const org1 = new Org('org1', 'example', undefined, undefined);
-    org1.entities = [
-      new Client('admin', org1, true)
-    ];
-    org1.ca = new Ca();
-    org1.ca.port = 7050;
-    const org2 = new Org('org2', 'example', undefined, undefined);
-    org2.entities = [
-      new Client('admin', org2, true)
-    ];
-    org2.ca = new Ca();
-    org2.ca.port = 7051;
-    const org3 = new Org('org3', 'example', undefined, undefined);
-    org3.entities = [
-      new Client('admin', org3, true)
-    ];
-    org3.ca = new Ca();
-    org3.ca.port = 7051;
-    this.network.orgs = [org1, org2, org3];
-    const sample = new Consortium('sample', [org1, org2]);
-    this.network.consortiums = [sample];
-    this.network.channels = [
-      new Channel('channel', sample, sample.orgs)
-    ];*/
+  constructor(private snackbar: MatSnackBar, private dialog: MatDialog) {
+    const network = localStorage.getItem('json');
+    if (network) {
+      this.network = Network.parse(JSON.parse(network));
+      localStorage.removeItem('json');
+    } else {
+      this.network = new Network();
+    }
   }
 
   ngOnInit(): void {
+    this.menus.push({name: 'Import', link: '', emit: true},
+      {name: 'Export', link: '', emit: true});
+  }
+
+  handleMenu(menu: Menu): void {
+    if (menu.name === 'Import') {
+      this.import();
+    }
+    if (menu.name === 'Export') {
+      this.export();
+    }
+  }
+
+  export(): void {
+    const blob = new Blob([JSON.stringify(this.network)], {type: 'text/json;charset=utf-8'});
+    FileSaver.saveAs(blob, 'config.json');
+  }
+
+  import(): void {
+    this.input.nativeElement.click();
+  }
+
+  fileToImportSelected(file: File): void {
+    if (file.type !== 'application/json') {
+      this.snackbar.open('Unsupported file', null, {
+        duration: 2000
+      });
+      return;
+    }
+    this.file = file;
+    this.dialog.open(ImportDialogComponent)
+      .afterClosed()
+      .subscribe(d => {
+        if (d.result) {
+          this.loadData();
+          this.file = undefined;
+        } else {
+          this.file = undefined;
+        }
+      });
+    this.input.nativeElement.value = '';
+  }
+
+  loadData(): void {
+    const fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      try {
+        const json = JSON.parse(fileReader.result as string);
+        localStorage.setItem('json', JSON.stringify(json));
+        location.reload();
+      } catch (e) {
+        localStorage.clear();
+        this.snackbar.open('Unsupported file', null, {
+          duration: 2000
+        });
+      }
+    };
+    fileReader.readAsText(this.file);
   }
 }

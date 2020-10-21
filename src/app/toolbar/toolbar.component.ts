@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../_services/authService';
 
-type Menu = { name: string, link: string };
+export type Menu = { name: string, link: string, emit?: boolean };
 
 @Component({
   selector: 'app-toolbar',
@@ -12,6 +12,8 @@ type Menu = { name: string, link: string };
 export class ToolbarComponent implements OnInit {
   title = 'HyperledgerFabric Wizard';
   menus: Menu[] = [];
+  @Input() threeDots: Menu[] = [];
+  @Output() threeDotsSelected: EventEmitter<Menu> = new EventEmitter<Menu>();
   @Input() loading = false;
   dropdown: { name: string, menus: Menu[] };
 
@@ -23,6 +25,7 @@ export class ToolbarComponent implements OnInit {
       this.dropdown = {
         name: this.authService.getEmail(), menus: [
           {name: 'Shared with me', link: '/shared'},
+          ...this.threeDots,
           {name: 'Logout', link: '/logout'}
         ]
       };

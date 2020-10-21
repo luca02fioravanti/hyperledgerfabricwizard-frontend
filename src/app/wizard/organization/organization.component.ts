@@ -1,8 +1,7 @@
 import {Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
 import {Org} from '../../_models/fabric/org';
 import {Client, Entity, Orderer, Peer, Type} from '../../_models/fabric/entity';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Ca} from '../../_models/fabric/ca';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {states} from '../../_models/fabric/states';
 import {CdkStepper} from '@angular/cdk/stepper';
 
@@ -137,7 +136,7 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
 
   private addMemberControl(i: number): FormGroup {
     const innerForm = this.formBuilder.group({});
-    const nameControl = this.formBuilder.control('', Validators.required);
+    const nameControl = this.formBuilder.control('', [Validators.required, Validators.pattern('^(?!(admin)$).+$')]);
     const typeControl = this.formBuilder.control('', Validators.required);
     const urlControl = this.formBuilder.control('', []);
     const portControl = this.formBuilder.control('', []);
@@ -163,8 +162,14 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
       const url = this.form.get(this.urlControl(i));
       const port = this.form.get(this.portControl(i));
       if (this.isHost(this.entities[i])) {
-        url.setValidators(Validators.required);
+        if (!this.isLocalhost) {
+          url.setValidators(Validators.required);
+        } else {
+          url.setValidators([]);
+        }
+        //url.updateValueAndValidity();
         port.setValidators(Validators.required);
+        //port.updateValueAndValidity();
       } else {
         url.setValidators([]);
         url.updateValueAndValidity();
@@ -175,7 +180,13 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
     urlControl.valueChanges.subscribe(e => {
       const entity = this.entities[i];
       if (entity instanceof Peer || entity instanceof Orderer) {
-        entity.url = e?.trim();
+        if (this.isLocalhost) {
+          entity.url = undefined;
+        } else {
+          if (e) {
+            entity.url = e?.trim();
+          }
+        }
       }
     });
     portControl.valueChanges.subscribe(e => {
@@ -196,6 +207,7 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
         entity.couchDB = e;
       }
     });
+
     stateControl.valueChanges.subscribe(e => {
       const entity = this.entities[i];
       if (!e) {

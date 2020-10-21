@@ -59,6 +59,7 @@ import {ShareComponent} from './network-config/details/share/share.component';
 import {SharingDialogComponent} from './network-config/details/share/sharing-dialog/sharing-dialog.component';
 import { SharedWithMeComponent } from './network-config/details/share/shared-with-me/shared-with-me.component';
 import { DeleteDialogComponent } from './network-config/details/delete-dialog/delete-dialog.component';
+import { ImportDialogComponent } from './wizard/import-dialog/import-dialog.component';
 
 
 const appearance: MatFormFieldDefaultOptions = {
@@ -89,7 +90,8 @@ const appearance: MatFormFieldDefaultOptions = {
     ShareComponent,
     SharingDialogComponent,
     SharedWithMeComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    ImportDialogComponent
   ],
   imports: [BrowserModule,
     BrowserAnimationsModule,

@@ -7,7 +7,7 @@ export class Network {
   orgs: Org[];
   consortiums: Consortium[];
   channels: Channel[];
-  isLocalhost = false;
+  isLocalhost: boolean;
 
 
   constructor(name?: string, orgs?: Org[], consortiums?: Consortium[], channels?: Channel[]) {
@@ -19,8 +19,11 @@ export class Network {
 
   static parse(obj: any): Network {
     const network = new Network();
-    if (obj.name) {
+    if (obj.name !== undefined) {
       network.name = obj.name;
+    }
+    if (obj.isLocalhost !== undefined) {
+      network.isLocalhost = obj.isLocalhost;
     }
     if (Array.isArray(obj.orgs)) {
       network.orgs = [];

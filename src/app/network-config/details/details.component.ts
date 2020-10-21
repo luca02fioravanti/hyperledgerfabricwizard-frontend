@@ -61,7 +61,7 @@ export class DetailsComponent implements OnInit, Loading {
   }
 
   download(i?: number): void {
-    if (i) {
+    if (i !== undefined) {
       this.loading = true;
       const org = this.config.network.orgs[i];
       this.extracted(org.fullName);

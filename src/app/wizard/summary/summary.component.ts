@@ -92,6 +92,9 @@ export class SummaryComponent implements OnInit {
         this.disabled = false;
         this.loading.emit(false);
       }
+    }, error => {
+      this.disabled = false;
+      this.loading.emit(false);
     });
   }
 

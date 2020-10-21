@@ -1,5 +1,5 @@
 <app-loading [loading]="loading"></app-loading>
-<app-toolbar>
+<app-toolbar (threeDotsSelected)="handleMenu($event)" [threeDots]="menus">
   <app-stepper [@.disabled]="true" linear #stepper>
     <cdk-step label="Network" [stepControl]="networkComponent.form">
       <app-network #networkComponent [network]="this.network"></app-network>
@@ -21,4 +21,6 @@
       <app-summary (loading)="loading=$event" *ngIf="stepper.selectedIndex==4" [network]="this.network"></app-summary>
     </cdk-step>
   </app-stepper>
+  <input style="display: none" accept="application/json" (change)="fileToImportSelected($event.target.files[0])"
+         #importFile type="file"/>
 </app-toolbar>

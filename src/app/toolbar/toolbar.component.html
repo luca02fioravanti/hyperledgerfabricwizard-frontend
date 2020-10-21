@@ -13,9 +13,14 @@
           <h4>{{dropdown.name}}</h4>
           <mat-divider></mat-divider>
         </div>
-        <button *ngFor="let menu of dropdown.menus" [routerLink]="menu.link" mat-menu-item>
-          <span>{{menu.name}}</span>
-        </button>
+        <ng-template ngFor let-menu [ngForOf]="dropdown.menus">
+          <ng-template [ngIf]="menu.emit !== undefined" [ngIfElse]="linkButton">
+            <button mat-menu-item (click)="this.threeDotsSelected.emit(menu)">{{menu.name}}</button>
+          </ng-template>
+          <ng-template #linkButton>
+            <button mat-menu-item [routerLink]="menu.link">{{menu.name}}</button>
+          </ng-template>
+        </ng-template>
       </mat-menu>
     </ng-template>
   </mat-toolbar-row>
