@@ -36,7 +36,7 @@ export class OrganizationsComponent implements OnInit {
         }
       }
       if (this.isLocalhost) {
-        const ports = flatMap(children, (group: FormGroup) => {
+        const ports = flatMap(flatMap(children, (group: FormGroup) => {
           return Object.values(group.controls).filter(c => {
             const typeControl = c.get('type');
             const portControl = c.get('port');
@@ -48,13 +48,19 @@ export class OrganizationsComponent implements OnInit {
               && portControl != null
               && portControl.valid;
           });
-        }).map(form => form.get('port'));
+        }), (form => {
+          if (form.get('type').value === 'Peer') {
+            return [form.get('port'), form.get('port1')];
+          }
+          return [form.get('port')];
+        }));
+        console.log(ports.map(portControl => portControl.value));
         const portSet = new Set(ports.map(portControl => portControl.value));
         if (ports.length > portSet.size) {
           return {ports: true};
         }
       } else {
-        const forms = flatMap(children, (group: FormGroup) => {
+        const forms = flatMap(flatMap(children, (group: FormGroup) => {
           return Object.values(group.controls).filter(c => {
             const typeControl = c.get('type');
             const portControl = c.get('port');
@@ -69,7 +75,13 @@ export class OrganizationsComponent implements OnInit {
               && urlControl != null
               && urlControl.valid;
           });
-        }).map(form => form.get('url').value + ':' + form.get('port').value);
+        }), (form => {
+            if (form.get('type').value === 'Peer') {
+              return [form.get('url').value + ':' + form.get('port').value, form.get('url').value + ':' + form.get('port1').value];
+            }
+            return [form.get('url').value + ':' + form.get('port').value];
+          }
+        ));
         const set = new Set(forms);
         if (forms.length > set.size) {
           return {url: true};

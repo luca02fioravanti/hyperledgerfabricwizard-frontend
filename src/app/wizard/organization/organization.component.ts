@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Org} from '../../_models/fabric/org';
 import {Client, Entity, Orderer, Peer, Type} from '../../_models/fabric/entity';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -80,6 +80,15 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  port1Control(i?: number): string {
+    const name = 'port1';
+    if (i === undefined) {
+      return name;
+    } else {
+      return this.memberControl(i) + `.${name}`;
+    }
+  }
+
   anchorControl(i?: number): string {
     const name = 'anchor';
     if (i === undefined) {
@@ -141,6 +150,7 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
     const typeControl = this.formBuilder.control('', Validators.required);
     const urlControl = this.formBuilder.control('', [this.urlPattern]);
     const portControl = this.formBuilder.control('', []);
+    const port1Control = this.formBuilder.control({value: '', disabled: true}, []);
     const anchorControl = this.formBuilder.control('', []);
     const couchDBControl = this.formBuilder.control('', []);
     const stateControl = this.formBuilder.control('', []);
@@ -149,6 +159,7 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
     innerForm.addControl(this.typeControl(), typeControl);
     innerForm.addControl(this.urlControl(), urlControl);
     innerForm.addControl(this.portControl(), portControl);
+    innerForm.addControl(this.port1Control(), port1Control);
     innerForm.addControl(this.anchorControl(), anchorControl);
     innerForm.addControl(this.couchDBControl(), couchDBControl);
     innerForm.addControl(this.stateControl(), stateControl);
@@ -190,7 +201,10 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
     });
     portControl.valueChanges.subscribe(e => {
       const entity = this.entities[i];
-      if (entity instanceof Peer || entity instanceof Orderer) {
+      if (entity instanceof Peer) {
+        entity.port = e;
+        this.form.get(this.port1Control(i)).setValue(e + 1);
+      } else if (entity instanceof Orderer) {
         entity.port = e;
       }
     });

@@ -39,6 +39,12 @@
                        formControlName="{{this.portControl()}}">
               </mat-form-field>
             </ng-template>
+            <ng-template [ngIf]="isPeer(entity)">
+              <mat-form-field fxFlex>
+                <mat-label><strong>Member {{i + 1}}</strong> reserved port</mat-label>
+                <input matInput type="number" formControlName="{{this.port1Control()}}">
+              </mat-form-field>
+            </ng-template>
             <mat-form-field fxFlex>
               <mat-label><strong>Member {{i + 1}}</strong> state</mat-label>
               <mat-select formControlName="{{stateControl()}}">
