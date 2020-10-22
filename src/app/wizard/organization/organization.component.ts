@@ -275,7 +275,6 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
           && (typeControl.valid || typeControl.disabled)
           && typeControl.value === 'Admin';
       });
-      console.log(admins);
       if (admins.length === 0) {
         result = {admin: true, ...result};
       }
