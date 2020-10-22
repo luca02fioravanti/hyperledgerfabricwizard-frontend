@@ -4,13 +4,23 @@
     <div fxFlexOrder="2" fxFlex.lt-sm="100" fxFlex="70" fxFlex.lg="60">
       <mat-card>
         <div fxLayout="row wrap" fxLayoutGap="2% grid">
-          <div *ngIf="!config.network.isLocalhost" fxFlex>
-            <button routerLink="share" style="width: 100%" color="primary" mat-stroked-button>Share
-              <mat-icon>share</mat-icon>
-            </button>
-          </div>
-          <div *ngIf="config.network.isLocalhost" fxFlex>
-            <button (click)="download()" style="width: 100%" color="primary" mat-stroked-button>Download
+          <ng-template [ngIf]="!config.network.isLocalhost" [ngIfElse]="downloadButton">
+            <div fxFlex>
+              <button routerLink="share" style="width: 100%" color="primary" mat-stroked-button>Share
+                <mat-icon>share</mat-icon>
+              </button>
+            </div>
+          </ng-template>
+          <ng-template #downloadButton>
+            <div fxFlex>
+              <button (click)="download()" style="width: 100%" color="primary" mat-stroked-button>
+                Download {{config.network.name}}.zip
+                <mat-icon>get_app</mat-icon>
+              </button>
+            </div>
+          </ng-template>
+          <div fxFlex>
+            <button (click)="exportConfig()" style="width: 100%" color="primary" mat-stroked-button>Export config
               <mat-icon>get_app</mat-icon>
             </button>
           </div>

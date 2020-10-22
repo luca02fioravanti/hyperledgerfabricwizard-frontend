@@ -82,6 +82,11 @@ export class DetailsComponent implements OnInit, Loading {
     });
   }
 
+  exportConfig(): void {
+    const blob = new Blob([JSON.stringify(this.config.network)], {type: 'text/json;charset=utf-8'});
+    FileSaver.saveAs(blob, this.config.network.name + '.json');
+  }
+
   deleteConfig(): void {
     this.dialog.open(DeleteDialogComponent, {
       width: '600px',
