@@ -18,6 +18,7 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
   @Input() last: boolean;
   @Input() i: number;
   form: FormGroup;
+  urlPattern = Validators.pattern('^(localhost|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))$');
 
   constructor(private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({});
@@ -138,7 +139,7 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
     const innerForm = this.formBuilder.group({});
     const nameControl = this.formBuilder.control('', [Validators.required, Validators.pattern('^(?!(admin)$).+$')]);
     const typeControl = this.formBuilder.control('', Validators.required);
-    const urlControl = this.formBuilder.control('', []);
+    const urlControl = this.formBuilder.control('', [this.urlPattern]);
     const portControl = this.formBuilder.control('', []);
     const anchorControl = this.formBuilder.control('', []);
     const couchDBControl = this.formBuilder.control('', []);
@@ -163,13 +164,11 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
       const port = this.form.get(this.portControl(i));
       if (this.isHost(this.entities[i])) {
         if (!this.isLocalhost) {
-          url.setValidators(Validators.required);
+          url.setValidators([Validators.required, this.urlPattern]);
         } else {
           url.setValidators([]);
         }
-        //url.updateValueAndValidity();
         port.setValidators(Validators.required);
-        //port.updateValueAndValidity();
       } else {
         url.setValidators([]);
         url.updateValueAndValidity();
@@ -266,10 +265,21 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
         return c instanceof FormGroup && nameControl != null && nameControl.valid;
       }).map(o => o.get(this.nameControl()).value.trim());
       const set = new Set(memberNames);
+      let result = {};
       if (memberNames.length > set.size) {
-        return {error: true};
+        result = {error: true, ...result};
       }
-      return null;
+      const admins = Object.values(control.controls).filter(c => {
+        const typeControl = c.get(this.typeControl());
+        return c instanceof FormGroup && typeControl != null
+          && (typeControl.valid || typeControl.disabled)
+          && typeControl.value === 'Admin';
+      });
+      console.log(admins);
+      if (admins.length === 0) {
+        result = {admin: true, ...result};
+      }
+      return result;
     });
   }
 

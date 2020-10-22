@@ -4,7 +4,9 @@
       <div fxFlex>
         <h2>Organizations</h2>
       </div>
-      <mat-error *ngIf="form.errors?.orderer">You must declare at least an orderer in your network!</mat-error>
+      <mat-error *ngIf="form.errors?.orderer">*You must declare at least an orderer in your network!</mat-error>
+      <mat-error *ngIf="form.errors?.ports">*You must declare the same port once!</mat-error>
+      <mat-error *ngIf="form.errors?.url">*You must declare the same url and port once!</mat-error>
     </div>
     <form [formGroup]="this.form">
       <mat-vertical-stepper linear>

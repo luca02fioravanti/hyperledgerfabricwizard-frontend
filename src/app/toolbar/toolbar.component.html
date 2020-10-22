@@ -8,9 +8,11 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #drop>
-        <div style="padding: 8px 8px">
-          <h5>Logged as:</h5>
-          <h4>{{dropdown.name}}</h4>
+        <div>
+          <button style="cursor: default!important;" class="mat-menu-item no-hover">
+            Logged as:
+          </button>
+          <button mat-menu-item>{{dropdown.name}}</button>
           <mat-divider></mat-divider>
         </div>
         <ng-template ngFor let-menu [ngForOf]="dropdown.menus">

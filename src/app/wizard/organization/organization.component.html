@@ -4,8 +4,9 @@
       <app-ca [isLocalhost]="this.isLocalhost" [parentForm]="form" [org]="this.org"></app-ca>
       <div fxLayout="row">
         <h2 fxFlex>Members</h2>
-        <div fxFlex fxFlexAlign="center" *ngIf="this.form.errors?.error">
-          <mat-error style="text-align: end">*Existing member!</mat-error>
+        <div fxFlex fxFlexAlign="center">
+          <mat-error *ngIf="this.form.errors?.error" style="text-align: end">*Existing member!</mat-error>
+          <mat-error *ngIf="this.form.errors?.admin" style="text-align: end">*You must add an admin member!</mat-error>
           <br>
         </div>
       </div>
@@ -28,6 +29,9 @@
               <mat-form-field *ngIf="!isLocalhost" fxFlex>
                 <mat-label><strong>Member {{i + 1}}</strong> url</mat-label>
                 <input required placeholder="localhost" matInput formControlName="{{this.urlControl()}}">
+                <mat-error *ngIf="this.form.get(this.urlControl(i)).errors?.pattern">You must insert a valid ip address
+                  (ex. 10.0.0.1 or localhost)
+                </mat-error>
               </mat-form-field>
               <mat-form-field fxFlex>
                 <mat-label><strong>Member {{i + 1}}</strong> port</mat-label>

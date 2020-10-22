@@ -12,3 +12,7 @@
   cursor: pointer;
   outline: transparent
 }
+
+.no-hover:hover, .no-hover:focus {
+  background: transparent !important;
+}
