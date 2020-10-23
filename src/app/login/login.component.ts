@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, Loading {
         if (result) {
           this.router.navigateByUrl('/');
         } else {
-          this.snackBar.open('Login non riuscita', '', {
+          this.snackBar.open('Login error', '', {
             duration: 2000,
           });
         }

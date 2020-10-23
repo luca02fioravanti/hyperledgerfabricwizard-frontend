@@ -54,7 +54,6 @@ export class OrganizationsComponent implements OnInit {
           }
           return [form.get('port')];
         }));
-        console.log(ports.map(portControl => portControl.value));
         const portSet = new Set(ports.map(portControl => portControl.value));
         if (ports.length > portSet.size) {
           return {ports: true};

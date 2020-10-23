@@ -60,6 +60,7 @@ import {SharingDialogComponent} from './network-config/details/share/sharing-dia
 import { SharedWithMeComponent } from './network-config/details/share/shared-with-me/shared-with-me.component';
 import { DeleteDialogComponent } from './network-config/details/delete-dialog/delete-dialog.component';
 import { ImportDialogComponent } from './wizard/import-dialog/import-dialog.component';
+import { DroppableDirective } from './droppable.directive';
 
 
 const appearance: MatFormFieldDefaultOptions = {
@@ -91,7 +92,8 @@ const appearance: MatFormFieldDefaultOptions = {
     SharingDialogComponent,
     SharedWithMeComponent,
     DeleteDialogComponent,
-    ImportDialogComponent
+    ImportDialogComponent,
+    DroppableDirective
   ],
   imports: [BrowserModule,
     BrowserAnimationsModule,
