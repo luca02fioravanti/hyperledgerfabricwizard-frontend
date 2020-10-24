@@ -15,6 +15,7 @@ import {Menu} from '../toolbar/toolbar.component';
 export class WizardComponent implements OnInit, Loading {
   network: Network;
   loading = false;
+  dropping = false;
   @ViewChild('importFile', {static: true}) input: ElementRef;
   file: File;
   menus: Menu[] = [];

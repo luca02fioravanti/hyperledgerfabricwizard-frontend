@@ -4,7 +4,11 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatStepper, MatStepperModule} from '@angular/material/stepper';
-import {MatFormFieldModule, MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {
+  MatFormFieldModule,
+  MatFormFieldDefaultOptions,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS
+} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -57,10 +61,10 @@ import {LoadingComponent} from './loading/loading.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ShareComponent} from './network-config/details/share/share.component';
 import {SharingDialogComponent} from './network-config/details/share/sharing-dialog/sharing-dialog.component';
-import { SharedWithMeComponent } from './network-config/details/share/shared-with-me/shared-with-me.component';
-import { DeleteDialogComponent } from './network-config/details/delete-dialog/delete-dialog.component';
-import { ImportDialogComponent } from './wizard/import-dialog/import-dialog.component';
-import { DroppableDirective } from './droppable.directive';
+import {SharedWithMeComponent} from './network-config/details/share/shared-with-me/shared-with-me.component';
+import {DeleteDialogComponent} from './network-config/details/delete-dialog/delete-dialog.component';
+import {ImportDialogComponent} from './wizard/import-dialog/import-dialog.component';
+import {DroppableDirective} from './droppable.directive';
 
 
 const appearance: MatFormFieldDefaultOptions = {

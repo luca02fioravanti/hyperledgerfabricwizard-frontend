@@ -1,9 +1,10 @@
 <app-loading [loading]="loading"></app-loading>
 <app-toolbar
-  appDroppable
-  (fileDropped)="fileToImportSelected($event[0])"
   (threeDotsSelected)="handleMenu($event)" [threeDots]="menus">
-  <app-stepper [@.disabled]="true" linear #stepper>
+  <app-stepper
+    appDroppable
+    (fileDropped)="fileToImportSelected($event[0])"
+    [@.disabled]="true" linear #stepper>
     <cdk-step label="Network" [stepControl]="networkComponent.form">
       <app-network #networkComponent [network]="this.network"></app-network>
     </cdk-step>

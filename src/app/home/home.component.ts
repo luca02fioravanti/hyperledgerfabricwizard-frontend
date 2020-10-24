@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, Loading {
         return {
           name: config.network.name,
           id: config.id,
-          timestamp: config.timestamp
+          timestamp: config.network.isLocalhost ? 'Local' : 'Distributed'
         };
       });
       this.loading = false;

@@ -5,6 +5,7 @@ import {Directive, EventEmitter, HostBinding, HostListener, Output} from '@angul
   selector: '[appDroppable]'
 })
 export class DroppableDirective {
+  @HostBinding('class.fileover') fileOver: boolean;
   @Output() fileDropped = new EventEmitter<any>();
   @Output() over = new EventEmitter<boolean>();
 
@@ -12,6 +13,7 @@ export class DroppableDirective {
   @HostListener('dragover', ['$event']) onDragOver(evt): void {
     evt.preventDefault();
     evt.stopPropagation();
+    this.fileOver = true;
     this.over.emit(true);
   }
 
@@ -20,6 +22,7 @@ export class DroppableDirective {
   public onDragLeave(evt): void {
     evt.preventDefault();
     evt.stopPropagation();
+    this.fileOver = false;
     this.over.emit(false);
   }
 
@@ -28,6 +31,7 @@ export class DroppableDirective {
   public ondrop(evt): void {
     evt.preventDefault();
     evt.stopPropagation();
+    this.fileOver = false;
     this.over.emit(false);
     const files = evt.dataTransfer.files;
     if (files.length > 0) {
