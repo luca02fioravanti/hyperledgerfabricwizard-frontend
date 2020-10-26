@@ -22,7 +22,7 @@ export class CaComponent implements OnInit {
   states = states;
 
   constructor(private formBuilder: FormBuilder) {
-    this.port = this.formBuilder.control('', [Validators.required]);
+    this.port = this.formBuilder.control('', [Validators.required, Validators.max(65535)]);
     this.state = this.formBuilder.control('', []);
 
     this.form = this.formBuilder.group({

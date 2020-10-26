@@ -149,7 +149,7 @@ export class OrganizationComponent implements OnInit, OnDestroy, OnChanges {
     const nameControl = this.formBuilder.control('', [Validators.required, Validators.pattern('^(?!(admin)$).+$')]);
     const typeControl = this.formBuilder.control('', Validators.required);
     const urlControl = this.formBuilder.control('', [this.urlPattern]);
-    const portControl = this.formBuilder.control('', []);
+    const portControl = this.formBuilder.control('', [Validators.max(65535)]);
     const port1Control = this.formBuilder.control({value: '', disabled: true}, []);
     const anchorControl = this.formBuilder.control('', []);
     const couchDBControl = this.formBuilder.control('', []);
