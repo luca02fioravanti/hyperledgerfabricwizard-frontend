@@ -12,7 +12,7 @@
           <button style="cursor: default!important;" class="mat-menu-item no-hover">
             Logged as:
           </button>
-          <button mat-menu-item>{{dropdown.name}}</button>
+          <button routerLink="/profile" mat-menu-item>{{dropdown.name}}</button>
           <mat-divider></mat-divider>
         </div>
         <ng-template ngFor let-menu [ngForOf]="dropdown.menus">

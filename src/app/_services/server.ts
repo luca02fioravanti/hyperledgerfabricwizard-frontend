@@ -63,4 +63,12 @@ export class Server {
   sharedWithMe(): Observable<Shared[]> {
     return this.httpClient.get<Shared[]>(`/api/shared/list`).pipe(catchError(() => of([])));
   }
+
+  profile(): Observable<User | undefined> {
+    return this.httpClient.get<User | undefined>('/api/user/profile').pipe(catchError(() => of(undefined)));
+  }
+
+  closeAccount(): Observable<boolean> {
+    return this.httpClient.get<boolean>('/api/user/close').pipe(catchError(() => of(false)));
+  }
 }

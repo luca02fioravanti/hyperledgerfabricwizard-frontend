@@ -20,7 +20,7 @@ export class Interceptor implements HttpInterceptor {
       update.headers = req.headers.set(AUTH_HEADER, TOKEN_PREFIX + token);
     }
     return next.handle(req.clone(update)).pipe(catchError(err => {
-      if ([401, 403].includes(err.status) && this.authService.getToken()) {
+      if ([400, 403].includes(err.status)) {
         // auto logout if 401 or 403 response returned from api
         this.authService.logout();
       }

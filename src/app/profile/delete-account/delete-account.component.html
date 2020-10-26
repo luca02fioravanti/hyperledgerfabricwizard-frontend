@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Are you sure you want to close your account?</h1>
+<div mat-dialog-content>
+  <br>
+  <h2>Your account, your configurations and its zips will be lost forever.</h2>
+  <br>
+</div>
+<div mat-dialog-actions fxLayout="row">
+  <button mat-button fxFlex (click)="cancel()">No</button>
+  <button cdkFocusInitial (click)="yes()" mat-flat-button color="warn" fxFlex>Close account</button>
+</div>
