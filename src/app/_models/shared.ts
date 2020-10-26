@@ -1,5 +1,5 @@
-import {User} from './user';
 import {NetworkZip} from './networkZip';
+import {User} from './user';
 
 export interface Shared {
   id: number;
